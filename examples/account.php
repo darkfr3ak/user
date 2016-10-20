@@ -131,6 +131,13 @@ if (isset($_POST['update_password'])) {
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                     <ul class="nav navbar-nav">
                         <li><a href="#"><?php echo $user['name']; ?></a></li>
+                        <?php
+                        if (User::hasGroup($user['id'], 1)) {
+                            ?>
+                            <li><a href="admin.php">Admin</a></li>
+                            <?php
+                        }
+                        ?>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
                         <li><a href="logout.php">Logout</a></li>
