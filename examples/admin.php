@@ -30,7 +30,7 @@ if (isset($_POST['update_data'])) {
     $userdata['mail'] = !empty($_POST['mail']) ? $_POST['mail'] : '';
     $userdata['group'] = !empty($_POST['group']) ? $_POST['group'] : '';
     if (User::update($userdata['id'], $userdata)) {
-        $data_update = true;
+        $data_update['msg'] = "User edited successfully";
     } else {
         $data_error['general'] = implode('<br/>', User::getError());
     }
@@ -38,25 +38,53 @@ if (isset($_POST['update_data'])) {
 if (isset($_POST['delete_user'])) {
     $userdata['id'] = !empty($_POST['id']) ? $_POST['id'] : '';
     if (User::delete($userdata['id'])) {
-        $data_update = true;
+        $data_update['msg'] = "User deleted successfully";
     } else {
         $data_error['general'] = implode('<br/>', User::getError());
     }
 }
 
 if (isset($_POST['add_user'])) {
-    if ($_POST['password'] == $_POST['passwordagain']) {
-        $userdata['login'] = !empty($_POST['login']) ? $_POST['login'] : '';
-        $userdata['pass'] = !empty($_POST['password']) ? $_POST['password'] : '';
-        $userdata['name'] = !empty($_POST['name']) ? $_POST['name'] : '';
-        $userdata['mail'] = !empty($_POST['mail']) ? $_POST['mail'] : '';
-        $userdata['group'] = 3;
+    $login = !empty($_POST['login']) ? $_POST['login'] : '';
+    $password = !empty($_POST['password']) ? $_POST['password'] : '';
+    $password_key = !empty($_POST['password_key']) ? $_POST['password_key'] : '';
 
-        $userID = User::add($userdata);
+    $error_flag = false;
+
+    if (empty($login)) {
+        /* login is required */
+        $registration_error['login'] = 'Login is required';
+        $error_flag = true;
+    } else if (User::loginExists($login)) {
+        /* login already exists */
+        $registration_error['login'] = 'Login exists';
+        $error_flag = true;
+    }
+
+    if (empty($password)) {
+        /* password is required */
+        $registration_error['password'] = 'Password is required';
+        $error_flag = true;
+    } else if ($password != $password_key) {
+        /* check password key */
+        $registration_error['password_key'] = 'Passwords do not match';
+        $error_flag = true;
+    }
+
+    /* all checks passed */
+    if (!$error_flag) {
+        $user_data = array(
+            'login' => $login,
+            'pass' => $password,
+            'group' => 3,
+            'name' => !empty($_POST['name']) ? $_POST['name'] : '',
+            'mail' => !empty($_POST['mail']) ? $_POST['mail'] : ''
+        );
+        $userID = User::add($user_data);
         if (!empty($userID)) {
             /* registration done */
             /* login user and redirect to account */
-            $data_update = true;
+            $data_update['msg'] = "User added successfully";
         } else {
             $data_error['general'] = implode('<br/>', User::getError());
         }
@@ -169,7 +197,7 @@ if (isset($_POST['add_user'])) {
                         <?php } ?>
                         <?php if (!empty($data_update)) { ?>
                             <br/><br/>
-                            <div class="alert alert-success" role="alert">Data saved</div>
+                            <div class="alert alert-success" role="alert"><?php echo $data_update['msg']; ?></div>
                         <?php } ?>
                     </div>
                 </div>
@@ -196,7 +224,7 @@ if (isset($_POST['add_user'])) {
                     <!-- Modal Body -->
                     <div class="modal-body">
 
-                        <form role="form" action="" method="POST">
+                        <form role="form" id="adduserForm" action="" method="POST">
                             <div class="form-group">
                                 <label for="login">Username</label>
                                 <input type="text" class="form-control"
@@ -220,7 +248,7 @@ if (isset($_POST['add_user'])) {
                             <div class="form-group">
                                 <label for="passwordagain">Re-enter Password</label>
                                 <input type="password" class="form-control"
-                                       id="passwordagain" name="passwordagain" placeholder="Re-enter Password"/>
+                                       id="password_key" name="password_key" placeholder="Re-enter Password"/>
                             </div>
                             <button type="submit" class="btn btn-default" name='add_user' id="add_user">Submit</button>
                         </form>
