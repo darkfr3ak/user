@@ -52,7 +52,8 @@ if (isset($_POST['registrtion'])) {
     if (!$error_flag) {
         $user_data = array(
             'login' => $login,
-            'pass' => $password
+            'pass' => $password,
+            'group' => 3
         );
         $userID = User::add($user_data);
         if (!empty($userID)) {

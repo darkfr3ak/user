@@ -114,7 +114,6 @@ if (isset($_POST['update_password'])) {
     <head>
         <title>User class demo. Account</title>
         <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css"/>
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.11.2/css/bootstrap-select.min.css">
     </head>
     <body>
         <nav class="navbar navbar-default">
@@ -159,34 +158,35 @@ if (isset($_POST['update_password'])) {
                                 </div>
                                 <div class="form-group">
                                     <label for="group">Group</label>
-<?php
-if (User::hasGroup($user['id'], 1)) {
-    ?>
-                                        <select name="group" id="group" class="form-control">
-                                        <?php
-                                        foreach ($groups as $key => $value) {
-                                            echo "<option value='" . $key . "'>" . $value . "</option>";
-                                        }
+                                    <?php
+                                    if (User::hasGroup($user['id'], 1)) {
                                         ?>
-                                        </select>
+                                        <select name="group" id="group" class="form-control">
                                             <?php
-                                        } else {
+                                            foreach ($groups as $key => $value) {
+                                                echo "<option value='" . $key . "'>" . $value . "</option>";
+                                            }
                                             ?>
+                                        </select>
+                                        <?php
+                                    } else {
+                                        ?>
                                         <p class="form-control-static"><?php echo User::getGroupbyID($user['group']); ?></p>
+                                        <input type="hidden" name="group" id="group" value="<?php echo $user['group']; ?>"/>
                                         <?php
                                     }
                                     ?>
 
                                 </div>
                                 <button type="submit" name="update_data" class="btn btn-primary">Update</button>
-<?php if (!empty($data_error['general'])) { ?>
+                                <?php if (!empty($data_error['general'])) { ?>
                                     <br/><br/>
                                     <div class="alert alert-danger" role="alert"><?php echo $data_error['general']; ?></div>
-<?php } ?>
+                                <?php } ?>
                                 <?php if (!empty($data_update)) { ?>
                                     <br/><br/>
                                     <div class="alert alert-success" role="alert">Data saved</div>
-<?php } ?>
+                                <?php } ?>
                             </form>
                         </div>
                     </div>
@@ -200,28 +200,28 @@ if (User::hasGroup($user['id'], 1)) {
                                 <div class="form-group">
                                     <label for="login">New login</label>
                                     <input type="text" class="form-control" name="login" id="login" placeholder="New login" value="<?php echo $user['login']; ?>"/>
-<?php if (!empty($login_error['login'])) { ?>
+                                    <?php if (!empty($login_error['login'])) { ?>
                                         <br/>
                                         <div class="alert alert-danger" role="alert"><?php echo $login_error['login']; ?></div>
-<?php } ?>
+                                    <?php } ?>
                                 </div>
                                 <div class="form-group">
                                     <label for="password">Password</label>
                                     <input type="password" class="form-control" name="password" id="password" placeholder="Password" value=""/>
-<?php if (!empty($login_error['password'])) { ?>
+                                    <?php if (!empty($login_error['password'])) { ?>
                                         <br/>
                                         <div class="alert alert-danger" role="alert"><?php echo $login_error['password']; ?></div>
-<?php } ?>
+                                    <?php } ?>
                                 </div>
                                 <button type="submit" name="update_login" class="btn btn-primary">Update</button>
-<?php if (!empty($login_error['general'])) { ?>
+                                <?php if (!empty($login_error['general'])) { ?>
                                     <br/><br/>
                                     <div class="alert alert-danger" role="alert"><?php echo $login_error['general']; ?></div>
-<?php } ?>
+                                <?php } ?>
                                 <?php if (!empty($login_update)) { ?>
                                     <br/><br/>
                                     <div class="alert alert-success" role="alert">Login updated</div>
-<?php } ?>
+                                <?php } ?>
                             </form>
                         </div>
                     </div>
@@ -235,36 +235,36 @@ if (User::hasGroup($user['id'], 1)) {
                                 <div class="form-group">
                                     <label for="password">Old password</label>
                                     <input type="password" class="form-control" name="password" id="password" placeholder="Old password" value=""/>
-<?php if (!empty($password_error['password'])) { ?>
+                                    <?php if (!empty($password_error['password'])) { ?>
                                         <br/>
                                         <div class="alert alert-danger" role="alert"><?php echo $password_error['password']; ?></div>
-<?php } ?>
+                                    <?php } ?>
                                 </div>
                                 <div class="form-group">
                                     <label for="password_new">New password</label>
                                     <input type="password" class="form-control" name="password_new" id="password_new" placeholder="New password" value=""/>
-<?php if (!empty($password_error['password_new'])) { ?>
+                                    <?php if (!empty($password_error['password_new'])) { ?>
                                         <br/>
                                         <div class="alert alert-danger" role="alert"><?php echo $password_error['password_new']; ?></div>
-<?php } ?>
+                                    <?php } ?>
                                 </div>
                                 <div class="form-group">
                                     <label for="password_key">Confirm password</label>
                                     <input type="password" class="form-control" name="password_key" id="password_key" placeholder="Confirm password" value=""/>
-<?php if (!empty($password_error['password_key'])) { ?>
+                                    <?php if (!empty($password_error['password_key'])) { ?>
                                         <br/>
                                         <div class="alert alert-danger" role="alert"><?php echo $password_error['password_key']; ?></div>
-<?php } ?>
+                                    <?php } ?>
                                 </div>
                                 <button type="submit" name="update_password" class="btn btn-primary">Update</button>
-<?php if (!empty($password_error['general'])) { ?>
+                                <?php if (!empty($password_error['general'])) { ?>
                                     <br/><br/>
                                     <div class="alert alert-danger" role="alert"><?php echo $password_error['general']; ?></div>
-<?php } ?>
+                                <?php } ?>
                                 <?php if (!empty($password_update)) { ?>
                                     <br/><br/>
                                     <div class="alert alert-success" role="alert">Password updated</div>
-<?php } ?>
+                                <?php } ?>
                             </form>
                         </div>
                     </div>
@@ -273,6 +273,5 @@ if (User::hasGroup($user['id'], 1)) {
         </div>
         <!-- Latest compiled and minified JavaScript -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.11.2/js/bootstrap-select.min.js"></script>
     </body>
 </html>
