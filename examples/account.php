@@ -21,6 +21,7 @@ User::init($sql_driver, $sql_host, $sql_name, $sql_user, $sql_pass);
 $user = false;
 if (User::check()) {
     $user = User::getByID($_SESSION['user']['id']);
+    $groups = User::getGroups();
 } else {
     /* redirect to user account */
     header('Location: login.php');
@@ -33,6 +34,7 @@ $data_update = false;
 if (isset($_POST['update_data'])) {
     $user['name'] = !empty($_POST['name']) ? $_POST['name'] : '';
     $user['mail'] = !empty($_POST['mail']) ? $_POST['mail'] : '';
+    $user['group'] = !empty($_POST['group']) ? $_POST['group'] : '';
     if (User::update($user['id'], $user)) {
         $data_update = true;
     } else {
@@ -123,6 +125,7 @@ if (isset($_POST['update_password'])) {
     <head>
         <title>User class demo. Account</title>
         <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css"/>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.11.2/css/bootstrap-select.min.css">
     </head>
     <body>
         <nav class="navbar navbar-default">
@@ -164,6 +167,27 @@ if (isset($_POST['update_password'])) {
                                 <div class="form-group">
                                     <label for="mail">Mail</label>
                                     <input type="text" class="form-control" name="mail" id="mail" placeholder="Mail" value="<?php echo $user['mail']; ?>"/>
+                                </div>
+                                <div class="form-group">
+                                    <label for="group">Group</label>
+                                    <?php
+                                    if (User::hasGroup($user['id'], 1)) {
+                                        ?>
+                                        <select name="group" id="group" class="form-control">
+                                            <?php
+                                            foreach ($groups as $key => $value) {
+                                                echo "<option value='" . $key . "'>" . $value . "</option>";
+                                            }
+                                            ?>
+                                        </select>
+                                        <?php
+                                    } else {
+                                        ?>
+                                        <p class="form-control-static"><?php echo User::getGroupbyID($user['group']); ?></p>
+                                        <?php
+                                    }
+                                    ?>
+
                                 </div>
                                 <button type="submit" name="update_data" class="btn btn-primary">Update</button>
                                 <?php if (!empty($data_error['general'])) { ?>
@@ -258,5 +282,8 @@ if (isset($_POST['update_password'])) {
                 </div>
             </div>
         </div>
+        <!-- Latest compiled and minified JavaScript -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.11.2/js/bootstrap-select.min.js"></script>
     </body>
 </html>

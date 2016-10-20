@@ -499,23 +499,34 @@ abstract class User {
     static function getGroup($userID) {
         $result = false;
         if (self::$_init) {
-            $res = self::$_db->prepare('SELECT `' . self::$_definition['fields']['group'] . '` FROM `' . self::$_definition['table'] . '` WHERE `' . self::$_definition['id'] . '` = :id;');
+            $res = self::$_db->prepare('SELECT `group` FROM `' . self::$_definition['table'] . '` WHERE `' . self::$_definition['id'] . '` = :id;');
             $res->setFetchMode(\PDO::FETCH_ASSOC);
             $res->execute(array('id' => $userID));
             if ($lot = $res->fetch()) {
-                $result = $lot[self::$_definition['fields']['group']];
+                $result = $lot['group'];
             }
         }
         return $result;
     }
 
-    /**
-     * Sets new group for User
-     *
-     * @return boolean Returns state of group change.
-     */
-    static function setGroup($userID, $groupID) {
+    static function getGroups() {
+        if (self::$_init) {
+            $res = self::$_db->query('SELECT * FROM `groups` ORDER BY `group_id`;');
+            $res->setFetchMode(\PDO::FETCH_ASSOC);
+            while ($lot = $res->fetch()) {
+                /* main fields */
+                $group[$lot['group_id']] = $lot['group_name'];
+            }
+        }
+        return $group;
+    }
 
+    static function getGroupbyID($groupID) {
+        if (self::$_init) {
+            $groups = self::getGroups();
+
+            return $groups[$groupID];
+        }
     }
 
     /**
@@ -523,8 +534,15 @@ abstract class User {
      *
      * @return boolean Returns if user has group.
      */
-    static function hasGroup($groupID) {
-
+    static function hasGroup($userID, $groupID) {
+        $result = false;
+        if (self::$_init) {
+            $group = self::getGroup(intval($userID));
+            if ($group == $groupID) {
+                return true;
+            }
+        }
+        return false;
     }
 
 }
