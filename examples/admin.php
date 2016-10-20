@@ -35,6 +35,33 @@ if (isset($_POST['update_data'])) {
         $data_error['general'] = implode('<br/>', User::getError());
     }
 }
+if (isset($_POST['delete_user'])) {
+    $userdata['id'] = !empty($_POST['id']) ? $_POST['id'] : '';
+    if (User::delete($userdata['id'])) {
+        $data_update = true;
+    } else {
+        $data_error['general'] = implode('<br/>', User::getError());
+    }
+}
+
+if (isset($_POST['add_user'])) {
+    if ($_POST['password'] == $_POST['passwordagain']) {
+        $userdata['login'] = !empty($_POST['login']) ? $_POST['login'] : '';
+        $userdata['pass'] = !empty($_POST['password']) ? $_POST['password'] : '';
+        $userdata['name'] = !empty($_POST['name']) ? $_POST['name'] : '';
+        $userdata['mail'] = !empty($_POST['mail']) ? $_POST['mail'] : '';
+        $userdata['group'] = 3;
+
+        $userID = User::add($userdata);
+        if (!empty($userID)) {
+            /* registration done */
+            /* login user and redirect to account */
+            $data_update = true;
+        } else {
+            $data_error['general'] = implode('<br/>', User::getError());
+        }
+    }
+}
 ?>
 
 <html>
@@ -42,6 +69,7 @@ if (isset($_POST['update_data'])) {
         <title>User class demo. Admin</title>
         <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css"/>
         <script src="http://code.jquery.com/jquery-3.1.1.min.js"></script>
+        <script src="bootstrap/js/bootstrap.min.js"></script>
     </head>
     <body>
         <nav class="navbar navbar-default">
@@ -73,62 +101,129 @@ if (isset($_POST['update_data'])) {
             <div class="row">
                 <div class="col-xs-12 col-sm-12 col-md-12">
                     <div class="panel panel-default">
-                        <div class="panel-heading">User list</div>
-                        <div class="panel-body">
-                            <?php
-                            $userList = User::getList();
-                            ?>
-                            <table class="table table-striped">
-                                <thead>
-                                    <tr>
-                                        <th>ID</th>
-                                        <th>Username</th>
-                                        <th>Name</th>
-                                        <th>E-Mail</th>
-                                        <th>Group</th>
-                                        <th></th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <?php
-                                    for ($index = 0; $index < count($userList); $index++) {
-                                        ?>
-                                    <form action="" method="post">
-                                        <tr>
-                                            <td><input type="hidden" name="id" id="id" value="<?php echo $userList[$index]['id'] ?>"/><?php echo $userList[$index]['id'] ?></td>
-                                            <td><?php echo $userList[$index]['login'] ?></td>
-                                            <td><input type="text" class="form-control" name="name" id="name" value="<?php echo $userList[$index]['name']; ?>"/></td>
-                                            <td><input type="email" class="form-control" name="mail" id="mail" value="<?php echo $userList[$index]['mail'] ?>"/></td>
-                                            <td>
-                                                <select name="group" id="group" class="form-control">
-                                                    <?php
-                                                    foreach ($groups as $key => $value) {
-                                                        if ($userList[$index]['group'] == $key) {
-                                                            echo "<option value='" . $key . "' selected>" . $value . "</option>";
-                                                        } else {
-                                                            echo "<option value='" . $key . "'>" . $value . "</option>";
-                                                        }
-                                                    }
-                                                    ?>
-                                                </select>
-                                            </td>
-                                            <td><button type="submit" name='update_data' id="update_data" class="btn btn-primary">Update</button> | Update</td>
-                                        </tr>
-                                    </form>
-                                    <?php
-                                }
-                                ?>
-                                </tbody>
-                            </table>
-                            <?php if (!empty($data_error['general'])) { ?>
-                                <br/><br/>
-                                <div class="alert alert-danger" role="alert"><?php echo $data_error['general']; ?></div>
-                            <?php } ?>
-                            <?php if (!empty($data_update)) { ?>
-                                <br/><br/>
-                                <div class="alert alert-success" role="alert">Data saved</div>
-                            <?php } ?>
+                        <div class="panel-heading">
+                            <h3 class="panel-title pull-left">
+                                User list
+                            </h3>
+
+                            <button class="btn btn-default pull-right" data-toggle="modal" data-target="#addUserModal"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add user</button>
+                            <div class="clearfix"></div>
+
                         </div>
+
+                        <?php
+                        $userList = User::getList();
+                        ?>
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Username</th>
+                                    <th>Name</th>
+                                    <th>E-Mail</th>
+                                    <th>Group</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php
+                                for ($index = 0; $index < count($userList); $index++) {
+                                    ?>
+                                <form action="" method="post">
+                                    <tr>
+                                        <td><input type="hidden" name="id" id="id" value="<?php echo $userList[$index]['id'] ?>"/><?php echo $userList[$index]['id'] ?></td>
+                                        <td><?php echo $userList[$index]['login'] ?></td>
+                                        <td><input type="text" class="form-control" name="name" id="name" value="<?php echo $userList[$index]['name']; ?>"/></td>
+                                        <td><input type="email" class="form-control" name="mail" id="mail" value="<?php echo $userList[$index]['mail'] ?>"/></td>
+                                        <td>
+                                            <select name="group" id="group" class="form-control">
+                                                <?php
+                                                foreach ($groups as $key => $value) {
+                                                    if ($userList[$index]['group'] == $key) {
+                                                        echo "<option value='" . $key . "' selected>" . $value . "</option>";
+                                                    } else {
+                                                        echo "<option value='" . $key . "'>" . $value . "</option>";
+                                                    }
+                                                }
+                                                ?>
+                                            </select>
+                                        </td>
+                                        <td>
+                                            <button type="submit" name='update_data' id="update_data" class="btn btn-primary"aria-label="Left Align">
+                                                <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+                                            </button>
+                                            <button type="submit" name='delete_user' id="delete_user" class="btn btn-danger"aria-label="Left Align">
+                                                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </form>
+                                <?php
+                            }
+                            ?>
+                            </tbody>
+                        </table>
+                        <?php if (!empty($data_error['general'])) { ?>
+                            <br/><br/>
+                            <div class="alert alert-danger" role="alert"><?php echo $data_error['general']; ?></div>
+                        <?php } ?>
+                        <?php if (!empty($data_update)) { ?>
+                            <br/><br/>
+                            <div class="alert alert-success" role="alert">Data saved</div>
+                        <?php } ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal -->
+        <div class="modal fade" id="addUserModal" tabindex="-1" role="dialog"
+             aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                        <button type="button" class="close"
+                                data-dismiss="modal">
+                            <span aria-hidden="true">&times;</span>
+                            <span class="sr-only">Close</span>
+                        </button>
+                        <h4 class="modal-title" id="myModalLabel">
+                            Add new user
+                        </h4>
+                    </div>
+
+                    <!-- Modal Body -->
+                    <div class="modal-body">
+
+                        <form role="form" action="" method="POST">
+                            <div class="form-group">
+                                <label for="login">Username</label>
+                                <input type="text" class="form-control"
+                                       id="login" name="login" placeholder="Login-Name"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="name">Name</label>
+                                <input type="text" class="form-control"
+                                       id="name" name="name" placeholder="Name"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="mail">Email address</label>
+                                <input type="email" class="form-control"
+                                       id="mail" name="mail" placeholder="Enter email"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="password">Password</label>
+                                <input type="password" class="form-control"
+                                       id="password" name="password" placeholder="Password"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="passwordagain">Re-enter Password</label>
+                                <input type="password" class="form-control"
+                                       id="passwordagain" name="passwordagain" placeholder="Re-enter Password"/>
+                            </div>
+                            <button type="submit" class="btn btn-default" name='add_user' id="add_user">Submit</button>
+                        </form>
                     </div>
                 </div>
             </div>
