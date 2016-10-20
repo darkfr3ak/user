@@ -24,7 +24,7 @@ require_once('./../user.class.php');
 /* Mysql access */
 $sql_driver = 'mysql';
 $sql_host = 'localhost';
-$sql_name = 'oz_user';
+$sql_name = 'opensource.my';
 $sql_user = 'root';
-$sql_pass = 'root';
+$sql_pass = '';
 \OZ\User::init($sql_driver, $sql_host, $sql_name, $sql_user, $sql_pass);
