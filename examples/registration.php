@@ -2,20 +2,9 @@
 /**
  * OZ\User registration demo
  */
-session_start();
-require_once('./../user.class.php');
-
-/* make it short */
+require 'config.php';
 
 use OZ\User as User;
-
-/* Mysql access */
-$sql_driver = 'mysql';
-$sql_host = 'localhost';
-$sql_name = 'oz_user';
-$sql_user = 'root';
-$sql_pass = 'root';
-User::init($sql_driver, $sql_host, $sql_name, $sql_user, $sql_pass);
 
 /* check current user */
 $user = false;
@@ -118,7 +107,7 @@ if (isset($_POST['registrtion'])) {
                         <div class="form-group">
                             <label for="login">Login</label>
                             <input type="text" class="form-control" name="login" id="login" placeholder="Login" value="<?php echo $login; ?>"/>
-<?php if (!empty($registration_error['login'])) { ?>
+                            <?php if (!empty($registration_error['login'])) { ?>
                                 <br/>
                                 <div class="alert alert-danger" role="alert"><?php echo $registration_error['login']; ?></div>
                             <?php } ?>
@@ -126,7 +115,7 @@ if (isset($_POST['registrtion'])) {
                         <div class="form-group">
                             <label for="password">Password</label>
                             <input type="password" class="form-control" name="password" id="password" placeholder="Password" value="<?php echo $password; ?>"/>
-<?php if (!empty($registration_error['password'])) { ?>
+                            <?php if (!empty($registration_error['password'])) { ?>
                                 <br/>
                                 <div class="alert alert-danger" role="alert"><?php echo $registration_error['password']; ?></div>
                             <?php } ?>
@@ -134,13 +123,13 @@ if (isset($_POST['registrtion'])) {
                         <div class="form-group">
                             <label for="password_key">Confirm password</label>
                             <input type="password" class="form-control" name="password_key" id="password_key" placeholder="Confirm password" value="<?php echo $password_key; ?>"/>
-<?php if (!empty($registration_error['password_key'])) { ?>
+                            <?php if (!empty($registration_error['password_key'])) { ?>
                                 <br/>
                                 <div class="alert alert-danger" role="alert"><?php echo $registration_error['password_key']; ?></div>
                             <?php } ?>
                         </div>
                         <button type="submit" name="registrtion" class="btn btn-primary">Registration</button>
-                            <?php if (!empty($registration_error['general'])) { ?>
+                        <?php if (!empty($registration_error['general'])) { ?>
                             <br/><br/>
                             <div class="alert alert-danger" role="alert"><?php echo $registration_error['general']; ?></div>
                         <?php } ?>
