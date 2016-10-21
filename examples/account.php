@@ -114,6 +114,10 @@ if (isset($_POST['update_password'])) {
     <head>
         <title>User class demo. Account</title>
         <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css"/>
+        <link rel='stylesheet' type='text/css' href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css">
+        <link rel='stylesheet' type='text/css' href="bootstrap/css/style.css"/>
+        <script src="http://code.jquery.com/jquery-3.1.1.min.js"></script>
+        <script src="bootstrap/js/bootstrap.min.js"></script>
     </head>
     <body>
         <nav class="navbar navbar-default">
@@ -130,7 +134,7 @@ if (isset($_POST['update_password'])) {
 
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                     <ul class="nav navbar-nav">
-                        <li><a href="#"><?php echo $user['name']; ?></a></li>
+                        <li><a href="account.php"><?php echo $user['name']; ?></a></li>
                         <?php
                         if (User::hasGroup($user['id'], 1)) {
                             ?>
@@ -185,14 +189,14 @@ if (isset($_POST['update_password'])) {
                                     ?>
 
                                 </div>
-                                <button type="submit" name="update_data" class="btn btn-primary">Update</button>
+                                <button type="submit" name="update_data" class="btn-clean">Update</button>
                                 <?php if (!empty($data_error['general'])) { ?>
                                     <br/><br/>
-                                    <div class="alert alert-danger" role="alert"><?php echo $data_error['general']; ?></div>
+                                    <div class="msg msg-danger msg-danger-text" role="alert"> <span class="glyphicon glyphicon-exclamation-sign"></span> <?php echo $data_error['general']; ?></div>
                                 <?php } ?>
                                 <?php if (!empty($data_update)) { ?>
                                     <br/><br/>
-                                    <div class="alert alert-success" role="alert">Data saved</div>
+                                    <div class="msg msg-success msg-success-text" role="alert"> <span class="glyphicon glyphicon glyphicon-ok"></span> Data saved</div>
                                 <?php } ?>
                             </form>
                         </div>
@@ -209,7 +213,7 @@ if (isset($_POST['update_password'])) {
                                     <input type="text" class="form-control" name="login" id="login" placeholder="New login" value="<?php echo $user['login']; ?>"/>
                                     <?php if (!empty($login_error['login'])) { ?>
                                         <br/>
-                                        <div class="alert alert-danger" role="alert"><?php echo $login_error['login']; ?></div>
+                                        <div class="msg msg-danger msg-danger-text" role="alert"> <span class="glyphicon glyphicon-exclamation-sign"></span> <?php echo $login_error['login']; ?></div>
                                     <?php } ?>
                                 </div>
                                 <div class="form-group">
@@ -217,17 +221,17 @@ if (isset($_POST['update_password'])) {
                                     <input type="password" class="form-control" name="password" id="password" placeholder="Password" value=""/>
                                     <?php if (!empty($login_error['password'])) { ?>
                                         <br/>
-                                        <div class="alert alert-danger" role="alert"><?php echo $login_error['password']; ?></div>
+                                        <div class="msg msg-danger msg-danger-text" role="alert"> <span class="glyphicon glyphicon-exclamation-sign"></span> <?php echo $login_error['password']; ?></div>
                                     <?php } ?>
                                 </div>
-                                <button type="submit" name="update_login" class="btn btn-primary">Update</button>
+                                <button type="submit" name="update_login" class="btn-clean">Update</button>
                                 <?php if (!empty($login_error['general'])) { ?>
                                     <br/><br/>
-                                    <div class="alert alert-danger" role="alert"><?php echo $login_error['general']; ?></div>
+                                    <div class="msg msg-danger msg-danger-text" role="alert"> <span class="glyphicon glyphicon-exclamation-sign"></span> <?php echo $login_error['general']; ?></div>
                                 <?php } ?>
                                 <?php if (!empty($login_update)) { ?>
                                     <br/><br/>
-                                    <div class="alert alert-success" role="alert">Login updated</div>
+                                    <div class="msg msg-success msg-success-text" role="alert"> <span class="glyphicon glyphicon glyphicon-ok"></span> Login updated</div>
                                 <?php } ?>
                             </form>
                         </div>
@@ -244,7 +248,7 @@ if (isset($_POST['update_password'])) {
                                     <input type="password" class="form-control" name="password" id="password" placeholder="Old password" value=""/>
                                     <?php if (!empty($password_error['password'])) { ?>
                                         <br/>
-                                        <div class="alert alert-danger" role="alert"><?php echo $password_error['password']; ?></div>
+                                        <div class="msg msg-danger msg-danger-text" role="alert"> <span class="glyphicon glyphicon-exclamation-sign"></span> <?php echo $password_error['password']; ?></div>
                                     <?php } ?>
                                 </div>
                                 <div class="form-group">
@@ -252,7 +256,7 @@ if (isset($_POST['update_password'])) {
                                     <input type="password" class="form-control" name="password_new" id="password_new" placeholder="New password" value=""/>
                                     <?php if (!empty($password_error['password_new'])) { ?>
                                         <br/>
-                                        <div class="alert alert-danger" role="alert"><?php echo $password_error['password_new']; ?></div>
+                                        <div class="msg msg-danger msg-danger-text" role="alert"> <span class="glyphicon glyphicon-exclamation-sign"></span> <?php echo $password_error['password_new']; ?></div>
                                     <?php } ?>
                                 </div>
                                 <div class="form-group">
@@ -260,17 +264,17 @@ if (isset($_POST['update_password'])) {
                                     <input type="password" class="form-control" name="password_key" id="password_key" placeholder="Confirm password" value=""/>
                                     <?php if (!empty($password_error['password_key'])) { ?>
                                         <br/>
-                                        <div class="alert alert-danger" role="alert"><?php echo $password_error['password_key']; ?></div>
+                                        <div class="msg msg-danger msg-danger-text" role="alert"> <span class="glyphicon glyphicon-exclamation-sign"></span> <?php echo $password_error['password_key']; ?></div>
                                     <?php } ?>
                                 </div>
-                                <button type="submit" name="update_password" class="btn btn-primary">Update</button>
+                                <button type="submit" name="update_password" class="btn-clean">Update</button>
                                 <?php if (!empty($password_error['general'])) { ?>
                                     <br/><br/>
-                                    <div class="alert alert-danger" role="alert"><?php echo $password_error['general']; ?></div>
+                                    <div class="msg msg-danger msg-danger-text" role="alert"> <span class="glyphicon glyphicon-exclamation-sign"></span> <?php echo $password_error['general']; ?></div>
                                 <?php } ?>
                                 <?php if (!empty($password_update)) { ?>
                                     <br/><br/>
-                                    <div class="alert alert-success" role="alert">Password updated</div>
+                                    <div class="msg msg-success msg-success-text" role="alert"> <span class="glyphicon glyphicon glyphicon-ok"></span> Password updated</div>
                                 <?php } ?>
                             </form>
                         </div>

@@ -11,6 +11,14 @@ $user = false;
 if (User::check()) {
     $user = User::getByID($_SESSION['user']['id']);
     $groups = User::getGroups();
+    $userList = User::getList();
+    $members = 0;
+    foreach ($userList as $value) {
+        if (intval($value['group']) == 3) {
+            $members = $members + 1;
+        }
+    }
+
     if (!User::hasGroup($user['id'], 1)) {
         header('Location: login.php');
         exit();
@@ -91,11 +99,13 @@ if (isset($_POST['add_user'])) {
     }
 }
 ?>
-
 <html>
     <head>
         <title>User class demo. Admin</title>
-        <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css"/>
+        <link rel='stylesheet' type='text/css' href="bootstrap/css/bootstrap.min.css"/>
+        <link rel='stylesheet' type='text/css' href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css">
+        <link rel='stylesheet' type='text/css' href="bootstrap/css/style.css"/>
+        <link rel='stylesheet' type='text/css' href="bootstrap/css/admin.css"/>
         <script src="http://code.jquery.com/jquery-3.1.1.min.js"></script>
         <script src="bootstrap/js/bootstrap.min.js"></script>
     </head>
@@ -114,7 +124,7 @@ if (isset($_POST['add_user'])) {
 
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                     <ul class="nav navbar-nav">
-                        <li><a href="#"><?php echo $user['name']; ?></a></li>
+                        <li><a href="account.php"><?php echo $user['name']; ?></a></li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
                         <li><a href="logout.php">Logout</a></li>
@@ -125,23 +135,42 @@ if (isset($_POST['add_user'])) {
 
         <div class="container">
             <h1>Admin</h1>
+            <div class="row">
+                <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+                    <div class="offer offer-info">
+                        <div class="shape">
+                            <div class="shape-text">
+                                <span class="glyphicon  glyphicon-home"></span>
+                            </div>
+                        </div>
+                        <div class="offer-content">
+                            <h3 class="lead">
+                                Users : <label class="label label-info"> <?php echo count($userList); ?></label>
+                            </h3>
+                            <h3 class="lead">
+                                Members : <label class="label label-info"> <?php echo $members; ?></label>
+                            </h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
 
+                </div>
+                <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+
+                </div>
+                <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+
+                </div>
+            </div>
             <div class="row">
                 <div class="col-xs-12 col-sm-12 col-md-12">
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            <h3 class="panel-title pull-left">
-                                User list
-                            </h3>
-
-                            <button class="btn btn-default pull-right" data-toggle="modal" data-target="#addUserModal"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add user</button>
+                            <h3 class="panel-title pull-left">User list</h3>
+                            <button class="btn-clean pull-right" data-toggle="modal" data-target="#addUserModal"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add user</button>
                             <div class="clearfix"></div>
-
                         </div>
-
-                        <?php
-                        $userList = User::getList();
-                        ?>
                         <table class="table table-striped">
                             <thead>
                                 <tr>
@@ -150,7 +179,7 @@ if (isset($_POST['add_user'])) {
                                     <th>Name</th>
                                     <th>E-Mail</th>
                                     <th>Group</th>
-                                    <th></th>
+                                    <th><em class="fa fa-cog"></em></th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -161,10 +190,10 @@ if (isset($_POST['add_user'])) {
                                     <tr>
                                         <td><input type="hidden" name="id" id="id" value="<?php echo $userList[$index]['id'] ?>"/><?php echo $userList[$index]['id'] ?></td>
                                         <td><?php echo $userList[$index]['login'] ?></td>
-                                        <td><input type="text" class="form-control" name="name" id="name" value="<?php echo $userList[$index]['name']; ?>"/></td>
-                                        <td><input type="email" class="form-control" name="mail" id="mail" value="<?php echo $userList[$index]['mail'] ?>"/></td>
+                                        <td><input type="text" class="form-input" name="name" id="name" value="<?php echo $userList[$index]['name']; ?>"/></td>
+                                        <td><input type="email" class="form-input" name="mail" id="mail" value="<?php echo $userList[$index]['mail'] ?>"/></td>
                                         <td>
-                                            <select name="group" id="group" class="form-control">
+                                            <select name="group" id="group" class="form-input">
                                                 <?php
                                                 foreach ($groups as $key => $value) {
                                                     if ($userList[$index]['group'] == $key) {
@@ -177,10 +206,10 @@ if (isset($_POST['add_user'])) {
                                             </select>
                                         </td>
                                         <td>
-                                            <button type="submit" name='update_data' id="update_data" class="btn btn-primary"aria-label="Left Align">
+                                            <button type="submit" name='update_data' id="update_data" class="btn-clean"aria-label="Left Align">
                                                 <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
                                             </button>
-                                            <button type="submit" name='delete_user' id="delete_user" class="btn btn-danger"aria-label="Left Align">
+                                            <button type="submit" name='delete_user' id="delete_user" class="btn-clean"aria-label="Left Align">
                                                 <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
                                             </button>
                                         </td>
@@ -193,17 +222,28 @@ if (isset($_POST['add_user'])) {
                         </table>
                         <?php if (!empty($data_error['general'])) { ?>
                             <br/><br/>
-                            <div class="alert alert-danger" role="alert"><?php echo $data_error['general']; ?></div>
+                            <div class="msg msg-danger msg-danger-text" role="alert"> <span class="glyphicon glyphicon-exclamation-sign"></span> <?php echo $data_error['general']; ?></div>
                         <?php } ?>
                         <?php if (!empty($data_update)) { ?>
                             <br/><br/>
-                            <div class="alert alert-success" role="alert"><?php echo $data_update['msg']; ?></div>
+                            <div class="msg msg-success msg-success-text" role="alert"> <span class="glyphicon glyphicon glyphicon-ok"></span> <?php echo $data_update['msg']; ?></div>
                         <?php } ?>
                     </div>
                 </div>
             </div>
-        </div>
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">User list</h3>
+                        </div>
+                        <div class="panel-body">
 
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         <!-- Modal -->
         <div class="modal fade" id="addUserModal" tabindex="-1" role="dialog"
              aria-labelledby="myModalLabel" aria-hidden="true">
@@ -223,34 +263,28 @@ if (isset($_POST['add_user'])) {
 
                     <!-- Modal Body -->
                     <div class="modal-body">
-
                         <form role="form" id="adduserForm" action="" method="POST">
                             <div class="form-group">
                                 <label for="login">Username</label>
-                                <input type="text" class="form-control"
-                                       id="login" name="login" placeholder="Login-Name"/>
+                                <input type="text" class="form-control" id="login" name="login" placeholder="Login-Name"/>
                             </div>
                             <div class="form-group">
                                 <label for="name">Name</label>
-                                <input type="text" class="form-control"
-                                       id="name" name="name" placeholder="Name"/>
+                                <input type="text" class="form-control" id="name" name="name" placeholder="Name"/>
                             </div>
                             <div class="form-group">
                                 <label for="mail">Email address</label>
-                                <input type="email" class="form-control"
-                                       id="mail" name="mail" placeholder="Enter email"/>
+                                <input type="email" class="form-control" id="mail" name="mail" placeholder="Enter email"/>
                             </div>
                             <div class="form-group">
                                 <label for="password">Password</label>
-                                <input type="password" class="form-control"
-                                       id="password" name="password" placeholder="Password"/>
+                                <input type="password" class="form-control" id="password" name="password" placeholder="Password"/>
                             </div>
                             <div class="form-group">
                                 <label for="passwordagain">Re-enter Password</label>
-                                <input type="password" class="form-control"
-                                       id="password_key" name="password_key" placeholder="Re-enter Password"/>
+                                <input type="password" class="form-control" id="password_key" name="password_key" placeholder="Re-enter Password"/>
                             </div>
-                            <button type="submit" class="btn btn-default" name='add_user' id="add_user">Submit</button>
+                            <button type="submit" class="btn btn-clean" name='add_user' id="add_user">Submit</button>
                         </form>
                     </div>
                 </div>
