@@ -102,12 +102,12 @@ if (isset($_POST['add_user'])) {
 <html>
     <head>
         <title>User class demo. Admin</title>
-        <link rel='stylesheet' type='text/css' href="bootstrap/css/bootstrap.min.css"/>
+        <link rel='stylesheet' type='text/css' href="<?php echo $themepath; ?>css/bootstrap.min.css"/>
         <link rel='stylesheet' type='text/css' href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css">
-        <link rel='stylesheet' type='text/css' href="bootstrap/css/style.css"/>
-        <link rel='stylesheet' type='text/css' href="bootstrap/css/admin.css"/>
+        <link rel='stylesheet' type='text/css' href="<?php echo $themepath; ?>css/style.css"/>
+        <link rel='stylesheet' type='text/css' href="<?php echo $themepath; ?>css/admin.css"/>
         <script src="http://code.jquery.com/jquery-3.1.1.min.js"></script>
-        <script src="bootstrap/js/bootstrap.min.js"></script>
+        <script src="<?php echo $themepath; ?>js/bootstrap.min.js"></script>
     </head>
     <body>
         <nav class="navbar navbar-default">

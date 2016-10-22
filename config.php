@@ -19,12 +19,14 @@
 
 
 session_start();
-require_once('./../user.class.php');
+require('vendor/autoload.php');
 
 /* Mysql access */
 $sql_driver = 'mysql';
 $sql_host = 'localhost';
-$sql_name = 'opensource.my';
+$sql_name = 'oz_user';
 $sql_user = 'root';
-$sql_pass = '';
+$sql_pass = 'root';
 \OZ\User::init($sql_driver, $sql_host, $sql_name, $sql_user, $sql_pass);
+
+$themepath = "Extensions/Themes/Default/";

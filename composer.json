@@ -1,0 +1,21 @@
+{
+    "name": "darkfr3ak/user",
+    "description": "Universal class for basic user routine. Class definition for your project purpose is required.",
+    "authors": [
+        {
+            "name": "Oleg Zorin",
+            "homepage": "http://oleg.zorin.ru",
+            "role": "Developer"
+        },
+        {
+            "name": "Marco Gundermann",
+            "email": "chlaum@gmail.com",
+            "role": "Developer"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "OZ\\": "Application/Classes/"
+        }
+    }
+}
