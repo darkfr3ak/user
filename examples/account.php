@@ -189,7 +189,7 @@ if (isset($_POST['update_password'])) {
                                     ?>
 
                                 </div>
-                                <button type="submit" name="update_data" class="btn-clean">Update</button>
+                                <button type="submit" name="update_data" class="btn btn-default">Update</button>
                                 <?php if (!empty($data_error['general'])) { ?>
                                     <br/><br/>
                                     <div class="msg msg-danger msg-danger-text" role="alert"> <span class="glyphicon glyphicon-exclamation-sign"></span> <?php echo $data_error['general']; ?></div>
@@ -224,7 +224,7 @@ if (isset($_POST['update_password'])) {
                                         <div class="msg msg-danger msg-danger-text" role="alert"> <span class="glyphicon glyphicon-exclamation-sign"></span> <?php echo $login_error['password']; ?></div>
                                     <?php } ?>
                                 </div>
-                                <button type="submit" name="update_login" class="btn-clean">Update</button>
+                                <button type="submit" name="update_login" class="btn btn-default">Update</button>
                                 <?php if (!empty($login_error['general'])) { ?>
                                     <br/><br/>
                                     <div class="msg msg-danger msg-danger-text" role="alert"> <span class="glyphicon glyphicon-exclamation-sign"></span> <?php echo $login_error['general']; ?></div>
@@ -267,7 +267,7 @@ if (isset($_POST['update_password'])) {
                                         <div class="msg msg-danger msg-danger-text" role="alert"> <span class="glyphicon glyphicon-exclamation-sign"></span> <?php echo $password_error['password_key']; ?></div>
                                     <?php } ?>
                                 </div>
-                                <button type="submit" name="update_password" class="btn-clean">Update</button>
+                                <button type="submit" name="update_password" class="btn btn-default">Update</button>
                                 <?php if (!empty($password_error['general'])) { ?>
                                     <br/><br/>
                                     <div class="msg msg-danger msg-danger-text" role="alert"> <span class="glyphicon glyphicon-exclamation-sign"></span> <?php echo $password_error['general']; ?></div>

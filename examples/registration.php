@@ -105,40 +105,56 @@ if (isset($_POST['registrtion'])) {
 
         <div class="container">
             <h1>Registration</h1>
-
-            <div class="row">
-                <div class="col-xs-12 col-sm-6 col-md-4 col-sm-offset-3 col-md-offset-4">
-                    <form action="" method="post">
-                        <div class="form-group">
-                            <label for="login">Login</label>
-                            <input type="text" class="form-control" name="login" id="login" placeholder="Login" value="<?php echo $login; ?>"/>
-                            <?php if (!empty($registration_error['login'])) { ?>
-                                <br/>
-                                <div class="alert alert-danger" role="alert"><?php echo $registration_error['login']; ?></div>
-                            <?php } ?>
-                        </div>
-                        <div class="form-group">
-                            <label for="password">Password</label>
-                            <input type="password" class="form-control" name="password" id="password" placeholder="Password" value="<?php echo $password; ?>"/>
-                            <?php if (!empty($registration_error['password'])) { ?>
-                                <br/>
-                                <div class="alert alert-danger" role="alert"><?php echo $registration_error['password']; ?></div>
-                            <?php } ?>
-                        </div>
-                        <div class="form-group">
-                            <label for="password_key">Confirm password</label>
-                            <input type="password" class="form-control" name="password_key" id="password_key" placeholder="Confirm password" value="<?php echo $password_key; ?>"/>
-                            <?php if (!empty($registration_error['password_key'])) { ?>
-                                <br/>
-                                <div class="alert alert-danger" role="alert"><?php echo $registration_error['password_key']; ?></div>
-                            <?php } ?>
-                        </div>
-                        <button type="submit" name="registrtion" class="btn btn-primary">Registration</button>
-                        <?php if (!empty($registration_error['general'])) { ?>
-                            <br/><br/>
-                            <div class="alert alert-danger" role="alert"><?php echo $registration_error['general']; ?></div>
-                        <?php } ?>
-                    </form>
+            <div id="signupbox" style="margin-top:50px" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <div class="panel-title">Sign Up</div>
+                        <div style="float:right; font-size: 85%; position: relative; top:-10px"><a id="signinlink" href="login.php">Sign In</a></div>
+                    </div>
+                    <div class="panel-body" >
+                        <form id="signupform" class="form-horizontal" role="form">
+                            <div class="form-group">
+                                <label for="login" class="col-md-3 control-label">Login</label>
+                                <div class="col-md-9">
+                                    <input type="text" class="form-control" name="login" id="login" placeholder="Login" value="<?php echo $login; ?>"/>
+                                    <?php if (!empty($registration_error['login'])) { ?>
+                                        <br/>
+                                        <div class="alert alert-danger" role="alert"><?php echo $registration_error['login']; ?></div>
+                                    <?php } ?>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="password" class="col-md-3 control-label">Password</label>
+                                <div class="col-md-9">
+                                    <input type="password" class="form-control" name="password" id="password" placeholder="Password" value="<?php echo $password; ?>"/>
+                                    <?php if (!empty($registration_error['password'])) { ?>
+                                        <br/>
+                                        <div class="alert alert-danger" role="alert"><?php echo $registration_error['password']; ?></div>
+                                    <?php } ?>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="password_key" class="col-md-3 control-label">Confirm password</label>
+                                <div class="col-md-9">
+                                    <input type="password" class="form-control" name="password_key" id="password_key" placeholder="Confirm password" value="<?php echo $password_key; ?>"/>
+                                    <?php if (!empty($registration_error['password_key'])) { ?>
+                                        <br/>
+                                        <div class="alert alert-danger" role="alert"><?php echo $registration_error['password_key']; ?></div>
+                                    <?php } ?>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <!-- Button -->
+                                <div class="col-md-offset-3 col-md-9">
+                                    <button type="submit" name="registrtion" class="btn btn-primary"><i class="icon-hand-right"></i> &nbsp Sign Up</button>
+                                    <?php if (!empty($registration_error['general'])) { ?>
+                                        <br/><br/>
+                                        <div class="alert alert-danger" role="alert"><?php echo $registration_error['general']; ?></div>
+                                    <?php } ?>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>

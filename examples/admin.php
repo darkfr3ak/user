@@ -168,7 +168,7 @@ if (isset($_POST['add_user'])) {
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <h3 class="panel-title pull-left">User list</h3>
-                            <button class="btn-clean pull-right" data-toggle="modal" data-target="#addUserModal"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add user</button>
+                            <button class="btn btn-default pull-right" data-toggle="modal" data-target="#addUserModal"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add user</button>
                             <div class="clearfix"></div>
                         </div>
                         <table class="table table-striped">
@@ -190,10 +190,10 @@ if (isset($_POST['add_user'])) {
                                     <tr>
                                         <td><input type="hidden" name="id" id="id" value="<?php echo $userList[$index]['id'] ?>"/><?php echo $userList[$index]['id'] ?></td>
                                         <td><?php echo $userList[$index]['login'] ?></td>
-                                        <td><input type="text" class="form-input" name="name" id="name" value="<?php echo $userList[$index]['name']; ?>"/></td>
-                                        <td><input type="email" class="form-input" name="mail" id="mail" value="<?php echo $userList[$index]['mail'] ?>"/></td>
+                                        <td><input type="text" class="form-control" name="name" id="name" value="<?php echo $userList[$index]['name']; ?>"/></td>
+                                        <td><input type="email" class="form-control" name="mail" id="mail" value="<?php echo $userList[$index]['mail'] ?>"/></td>
                                         <td>
-                                            <select name="group" id="group" class="form-input">
+                                            <select name="group" id="group" class="form-control">
                                                 <?php
                                                 foreach ($groups as $key => $value) {
                                                     if ($userList[$index]['group'] == $key) {
@@ -206,10 +206,10 @@ if (isset($_POST['add_user'])) {
                                             </select>
                                         </td>
                                         <td>
-                                            <button type="submit" name='update_data' id="update_data" class="btn-clean"aria-label="Left Align">
+                                            <button type="submit" name='update_data' id="update_data" class="btn btn-default"aria-label="Left Align">
                                                 <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
                                             </button>
-                                            <button type="submit" name='delete_user' id="delete_user" class="btn-clean"aria-label="Left Align">
+                                            <button type="submit" name='delete_user' id="delete_user" class="btn btn-default"aria-label="Left Align">
                                                 <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
                                             </button>
                                         </td>
@@ -284,7 +284,7 @@ if (isset($_POST['add_user'])) {
                                 <label for="passwordagain">Re-enter Password</label>
                                 <input type="password" class="form-control" id="password_key" name="password_key" placeholder="Re-enter Password"/>
                             </div>
-                            <button type="submit" class="btn btn-clean" name='add_user' id="add_user">Submit</button>
+                            <button type="submit" class="btn btn btn-default" name='add_user' id="add_user">Submit</button>
                         </form>
                     </div>
                 </div>
