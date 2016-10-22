@@ -3,7 +3,7 @@
 /**
  * OZ\User logout demo
  */
-require 'config.php';
+require 'Application/Config/App.Config.php';
 
 use OZ\User as User;
 

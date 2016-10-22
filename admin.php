@@ -2,7 +2,7 @@
 /**
  * OZ\User account demo
  */
-require 'config.php';
+require 'Application/Config/App.Config.php';
 
 use OZ\User as User;
 
@@ -103,6 +103,7 @@ if (isset($_POST['add_user'])) {
     <head>
         <title>User class demo. Admin</title>
         <link rel='stylesheet' type='text/css' href="<?php echo $themepath; ?>css/bootstrap.min.css"/>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/cosmo/bootstrap.min.css"/>
         <link rel='stylesheet' type='text/css' href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css">
         <link rel='stylesheet' type='text/css' href="<?php echo $themepath; ?>css/style.css"/>
         <link rel='stylesheet' type='text/css' href="<?php echo $themepath; ?>css/admin.css"/>
